@@ -1,0 +1,112 @@
+@host = localhost:8080
+
+
+### Login As Admin
+POST /api/auth/login
+Host: {{host}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "admin@cleanspace.de",
+  "password": "password"
+}
+
+### Create Workspace
+POST /api/workspaces
+Host: {{host}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "The Quiet Corner",
+  "open": "10:30:00",
+  "close": "18:30:00",
+  "capacity": 10,
+  "properties": [
+    {
+      "key": "Equipment",
+      "value": "Monitor"
+    },
+    {
+      "key": "Feature",
+      "value": "Quiet Zone"
+    }
+  ]
+}
+
+### Create Workspace 2
+POST /api/workspaces
+Host: {{host}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "The 2330",
+  "open": "00:00:00",
+  "close": "23:30:00",
+  "capacity": 15,
+  "properties": [
+    {
+      "key": "Equipment",
+      "value": "4K"
+    },
+    {
+      "key": "Feature",
+      "value": "Free Drinks"
+    }
+  ]
+}
+
+### Create Reservation
+POST /api/reservations
+Host: {{host}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "workspaceName": "The Quiet Corner",
+  "userEmail": "admin@cleanspace.de",
+  "start": "2025-08-03T15:15:30",
+  "durationInMinutes": 60
+}
+
+### Find Available Workspaces (The Quiet Corner)
+GET /api/workspaces/available
+Host: {{host}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "start": "2025-08-03T15:15:30",
+  "durationInMinutes": 60,
+  "minCapacity": 1,
+  "requiredProperties": [
+    "Feature:Quiet Zone"
+  ]
+}
+
+### Find Available Workspaces (The 2330)
+GET /api/workspaces/available
+Host: {{host}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "start": "2025-08-03T15:15:30",
+  "durationInMinutes": 60,
+  "minCapacity": 1,
+  "requiredProperties": [
+    "Feature:Free Drinks"
+  ]
+}
+
+### Find User Reservations by Email
+GET /api/reservations/user
+Host: {{host}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "userEmail": "admin@cleanspace.de"
+}
